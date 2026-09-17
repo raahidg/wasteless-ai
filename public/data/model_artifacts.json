@@ -1,0 +1,963 @@
+{
+  "metadata": {
+    "dataset_name": "global_food_wastage_dataset.csv",
+    "total_records": 5000,
+    "train_records": 4000,
+    "test_records": 1000,
+    "target_variable": "Economic Loss (Million $)",
+    "target_unit": "Million USD ($)",
+    "risk_target": "Waste Severity Risk (Low, Moderate, High)"
+  },
+  "regression_models": {
+    "primary": {
+      "name": "Ridge Regression (L2 Regularized)",
+      "mae": 2534.32,
+      "rmse": 3358.45,
+      "r2": 0.9504,
+      "error_reduction_pct": 80.5,
+      "intercept": 51662.0793,
+      "coefficients": {
+        "Total Waste (Tons)": 1.0006177875389022,
+        "Avg Waste per Capita (Kg)": -0.8713872790794113,
+        "Population (Million)": -0.007034488082403643,
+        "Household Waste (%)": -4.232345678512623,
+        "Year": -25.35842153089471,
+        "Country_Australia": 148.90826801347487,
+        "Country_Brazil": -544.660677415253,
+        "Country_Canada": -205.5047826605135,
+        "Country_China": 307.18054664604796,
+        "Country_France": -580.8801284793058,
+        "Country_Germany": -433.8924797491205,
+        "Country_India": -103.5205633538803,
+        "Country_Indonesia": -329.76268844912215,
+        "Country_Italy": -235.28690182215027,
+        "Country_Japan": -334.6470855597587,
+        "Country_Mexico": -108.84596218566325,
+        "Country_Russia": -470.49238621669446,
+        "Country_Saudi Arabia": 119.50225651239491,
+        "Country_South Africa": -305.576585302194,
+        "Country_South Korea": 79.11088467727737,
+        "Country_Spain": -11.598660509701576,
+        "Country_Turkey": -300.75203503877196,
+        "Country_UK": -410.6861886031063,
+        "Country_USA": -121.77752629155998,
+        "Food Category_Beverages": 76.25076473493975,
+        "Food Category_Dairy Products": -119.70138914984214,
+        "Food Category_Frozen Food": 302.67261798283175,
+        "Food Category_Fruits & Vegetables": 324.19880050600034,
+        "Food Category_Grains & Cereals": -209.93127808455733,
+        "Food Category_Meat & Seafood": -5.323419035977416,
+        "Food Category_Prepared Food": 7.176273108646356
+      }
+    },
+    "random_forest": {
+      "name": "Random Forest Regressor (100 Trees)",
+      "mae": 2590.39,
+      "rmse": 3479.44,
+      "r2": 0.9468,
+      "top_importances": [
+        {
+          "feature": "Total Waste (Tons)",
+          "importance": 0.9681
+        },
+        {
+          "feature": "Population (Million)",
+          "importance": 0.0072
+        },
+        {
+          "feature": "Avg Waste per Capita (Kg)",
+          "importance": 0.0064
+        },
+        {
+          "feature": "Household Waste (%)",
+          "importance": 0.0062
+        },
+        {
+          "feature": "Year",
+          "importance": 0.0024
+        },
+        {
+          "feature": "Food Category_Grains & Cereals",
+          "importance": 0.0006
+        },
+        {
+          "feature": "Food Category_Fruits & Vegetables",
+          "importance": 0.0006
+        },
+        {
+          "feature": "Food Category_Dairy Products",
+          "importance": 0.0005
+        },
+        {
+          "feature": "Food Category_Meat & Seafood",
+          "importance": 0.0005
+        },
+        {
+          "feature": "Food Category_Frozen Food",
+          "importance": 0.0004
+        }
+      ]
+    },
+    "baseline": {
+      "name": "Dummy Regressor (Mean Baseline)",
+      "mae": 12994.36,
+      "rmse": 15082.13,
+      "r2": -0.0004,
+      "mean_prediction": 24981.53
+    }
+  },
+  "classifier_model": {
+    "name": "Decision Tree Risk Classifier",
+    "accuracy": 0.999,
+    "precision": 0.999,
+    "recall": 0.999,
+    "f1_score": 0.999,
+    "classes": [
+      "Low (<17k Tons)",
+      "Moderate (17k-33k Tons)",
+      "High (>33k Tons)"
+    ]
+  },
+  "actual_vs_predicted_samples": [
+    {
+      "actual": 40130.22,
+      "predicted": 48395.29,
+      "baseline": 24981.53,
+      "error": 8265.07,
+      "pct_error": 20.6
+    },
+    {
+      "actual": 11830.97,
+      "predicted": 10986.28,
+      "baseline": 24981.53,
+      "error": -844.69,
+      "pct_error": 7.14
+    },
+    {
+      "actual": 26788.2,
+      "predicted": 24990.4,
+      "baseline": 24981.53,
+      "error": -1797.8,
+      "pct_error": 6.71
+    },
+    {
+      "actual": 27947.03,
+      "predicted": 31350.74,
+      "baseline": 24981.53,
+      "error": 3403.71,
+      "pct_error": 12.18
+    },
+    {
+      "actual": 5401.48,
+      "predicted": 5253.6,
+      "baseline": 24981.53,
+      "error": -147.88,
+      "pct_error": 2.74
+    },
+    {
+      "actual": 11857.8,
+      "predicted": 12086.14,
+      "baseline": 24981.53,
+      "error": 228.34,
+      "pct_error": 1.93
+    },
+    {
+      "actual": 25760.76,
+      "predicted": 30657.16,
+      "baseline": 24981.53,
+      "error": 4896.4,
+      "pct_error": 19.01
+    },
+    {
+      "actual": 4992.48,
+      "predicted": 3912.68,
+      "baseline": 24981.53,
+      "error": -1079.8,
+      "pct_error": 21.63
+    },
+    {
+      "actual": 10254.62,
+      "predicted": 9071.39,
+      "baseline": 24981.53,
+      "error": -1183.23,
+      "pct_error": 11.54
+    },
+    {
+      "actual": 48880.59,
+      "predicted": 46232.4,
+      "baseline": 24981.53,
+      "error": -2648.19,
+      "pct_error": 5.42
+    },
+    {
+      "actual": 30720.54,
+      "predicted": 28394.58,
+      "baseline": 24981.53,
+      "error": -2325.96,
+      "pct_error": 7.57
+    },
+    {
+      "actual": 16756.25,
+      "predicted": 17713.15,
+      "baseline": 24981.53,
+      "error": 956.9,
+      "pct_error": 5.71
+    },
+    {
+      "actual": 52728.75,
+      "predicted": 45355.3,
+      "baseline": 24981.53,
+      "error": -7373.45,
+      "pct_error": 13.98
+    },
+    {
+      "actual": 1183.95,
+      "predicted": 1227.06,
+      "baseline": 24981.53,
+      "error": 43.11,
+      "pct_error": 3.64
+    },
+    {
+      "actual": 27392.4,
+      "predicted": 26992.52,
+      "baseline": 24981.53,
+      "error": -399.88,
+      "pct_error": 1.46
+    },
+    {
+      "actual": 44555.83,
+      "predicted": 40560.04,
+      "baseline": 24981.53,
+      "error": -3995.79,
+      "pct_error": 8.97
+    },
+    {
+      "actual": 7070.94,
+      "predicted": 6795.3,
+      "baseline": 24981.53,
+      "error": -275.64,
+      "pct_error": 3.9
+    },
+    {
+      "actual": 38671.77,
+      "predicted": 35622.49,
+      "baseline": 24981.53,
+      "error": -3049.28,
+      "pct_error": 7.89
+    },
+    {
+      "actual": 7062.98,
+      "predicted": 5649.34,
+      "baseline": 24981.53,
+      "error": -1413.64,
+      "pct_error": 20.01
+    },
+    {
+      "actual": 11382.9,
+      "predicted": 12270.09,
+      "baseline": 24981.53,
+      "error": 887.19,
+      "pct_error": 7.79
+    },
+    {
+      "actual": 39215.5,
+      "predicted": 47880.32,
+      "baseline": 24981.53,
+      "error": 8664.82,
+      "pct_error": 22.1
+    },
+    {
+      "actual": 2749.9,
+      "predicted": 2642.29,
+      "baseline": 24981.53,
+      "error": -107.61,
+      "pct_error": 3.91
+    },
+    {
+      "actual": 11697.07,
+      "predicted": 10266.46,
+      "baseline": 24981.53,
+      "error": -1430.61,
+      "pct_error": 12.23
+    },
+    {
+      "actual": 11004.04,
+      "predicted": 12694.99,
+      "baseline": 24981.53,
+      "error": 1690.95,
+      "pct_error": 15.37
+    },
+    {
+      "actual": 49982.07,
+      "predicted": 49548.46,
+      "baseline": 24981.53,
+      "error": -433.61,
+      "pct_error": 0.87
+    },
+    {
+      "actual": 34962.3,
+      "predicted": 38774.96,
+      "baseline": 24981.53,
+      "error": 3812.66,
+      "pct_error": 10.91
+    },
+    {
+      "actual": 2889.8,
+      "predicted": 3293.64,
+      "baseline": 24981.53,
+      "error": 403.84,
+      "pct_error": 13.97
+    },
+    {
+      "actual": 46300.1,
+      "predicted": 44607.96,
+      "baseline": 24981.53,
+      "error": -1692.14,
+      "pct_error": 3.65
+    },
+    {
+      "actual": 6253.55,
+      "predicted": 7210.88,
+      "baseline": 24981.53,
+      "error": 957.33,
+      "pct_error": 15.31
+    },
+    {
+      "actual": 17081.77,
+      "predicted": 14879.58,
+      "baseline": 24981.53,
+      "error": -2202.19,
+      "pct_error": 12.89
+    },
+    {
+      "actual": 53715.15,
+      "predicted": 44823.25,
+      "baseline": 24981.53,
+      "error": -8891.9,
+      "pct_error": 16.55
+    },
+    {
+      "actual": 27161.16,
+      "predicted": 25657.52,
+      "baseline": 24981.53,
+      "error": -1503.64,
+      "pct_error": 5.54
+    },
+    {
+      "actual": 24428.52,
+      "predicted": 26990.33,
+      "baseline": 24981.53,
+      "error": 2561.81,
+      "pct_error": 10.49
+    },
+    {
+      "actual": 3485.04,
+      "predicted": 3102.61,
+      "baseline": 24981.53,
+      "error": -382.43,
+      "pct_error": 10.97
+    },
+    {
+      "actual": 6768.62,
+      "predicted": 7772.6,
+      "baseline": 24981.53,
+      "error": 1003.98,
+      "pct_error": 14.83
+    },
+    {
+      "actual": 19007.22,
+      "predicted": 21463.0,
+      "baseline": 24981.53,
+      "error": 2455.78,
+      "pct_error": 12.92
+    },
+    {
+      "actual": 4942.92,
+      "predicted": 6054.97,
+      "baseline": 24981.53,
+      "error": 1112.05,
+      "pct_error": 22.5
+    },
+    {
+      "actual": 46444.54,
+      "predicted": 41753.3,
+      "baseline": 24981.53,
+      "error": -4691.24,
+      "pct_error": 10.1
+    },
+    {
+      "actual": 20405.37,
+      "predicted": 24848.72,
+      "baseline": 24981.53,
+      "error": 4443.35,
+      "pct_error": 21.78
+    },
+    {
+      "actual": 53743.68,
+      "predicted": 44829.42,
+      "baseline": 24981.53,
+      "error": -8914.26,
+      "pct_error": 16.59
+    },
+    {
+      "actual": 25866.5,
+      "predicted": 31265.16,
+      "baseline": 24981.53,
+      "error": 5398.66,
+      "pct_error": 20.87
+    },
+    {
+      "actual": 25134.78,
+      "predicted": 25535.0,
+      "baseline": 24981.53,
+      "error": 400.22,
+      "pct_error": 1.59
+    },
+    {
+      "actual": 8884.31,
+      "predicted": 9504.78,
+      "baseline": 24981.53,
+      "error": 620.47,
+      "pct_error": 6.98
+    },
+    {
+      "actual": 1992.64,
+      "predicted": 2300.7,
+      "baseline": 24981.53,
+      "error": 308.06,
+      "pct_error": 15.46
+    },
+    {
+      "actual": 30541.38,
+      "predicted": 35724.6,
+      "baseline": 24981.53,
+      "error": 5183.22,
+      "pct_error": 16.97
+    },
+    {
+      "actual": 13426.9,
+      "predicted": 13336.84,
+      "baseline": 24981.53,
+      "error": -90.06,
+      "pct_error": 0.67
+    },
+    {
+      "actual": 23192.66,
+      "predicted": 19106.37,
+      "baseline": 24981.53,
+      "error": -4086.29,
+      "pct_error": 17.62
+    },
+    {
+      "actual": 10330.11,
+      "predicted": 10233.05,
+      "baseline": 24981.53,
+      "error": -97.06,
+      "pct_error": 0.94
+    },
+    {
+      "actual": 22962.63,
+      "predicted": 24880.81,
+      "baseline": 24981.53,
+      "error": 1918.18,
+      "pct_error": 8.35
+    },
+    {
+      "actual": 32823.22,
+      "predicted": 35612.79,
+      "baseline": 24981.53,
+      "error": 2789.57,
+      "pct_error": 8.5
+    },
+    {
+      "actual": 12010.8,
+      "predicted": 12630.17,
+      "baseline": 24981.53,
+      "error": 619.37,
+      "pct_error": 5.16
+    },
+    {
+      "actual": 29320.94,
+      "predicted": 25256.0,
+      "baseline": 24981.53,
+      "error": -4064.94,
+      "pct_error": 13.86
+    },
+    {
+      "actual": 14750.52,
+      "predicted": 14681.46,
+      "baseline": 24981.53,
+      "error": -69.06,
+      "pct_error": 0.47
+    },
+    {
+      "actual": 5831.34,
+      "predicted": 5160.42,
+      "baseline": 24981.53,
+      "error": -670.92,
+      "pct_error": 11.51
+    },
+    {
+      "actual": 10618.35,
+      "predicted": 10281.73,
+      "baseline": 24981.53,
+      "error": -336.62,
+      "pct_error": 3.17
+    },
+    {
+      "actual": 40593.28,
+      "predicted": 36725.91,
+      "baseline": 24981.53,
+      "error": -3867.37,
+      "pct_error": 9.53
+    },
+    {
+      "actual": 6925.21,
+      "predicted": 7179.05,
+      "baseline": 24981.53,
+      "error": 253.84,
+      "pct_error": 3.67
+    },
+    {
+      "actual": 23300.52,
+      "predicted": 20260.21,
+      "baseline": 24981.53,
+      "error": -3040.31,
+      "pct_error": 13.05
+    },
+    {
+      "actual": 31061.02,
+      "predicted": 36570.2,
+      "baseline": 24981.53,
+      "error": 5509.18,
+      "pct_error": 17.74
+    },
+    {
+      "actual": 32988.39,
+      "predicted": 27486.45,
+      "baseline": 24981.53,
+      "error": -5501.94,
+      "pct_error": 16.68
+    },
+    {
+      "actual": 5034.96,
+      "predicted": 4209.12,
+      "baseline": 24981.53,
+      "error": -825.84,
+      "pct_error": 16.4
+    },
+    {
+      "actual": 18033.21,
+      "predicted": 18485.3,
+      "baseline": 24981.53,
+      "error": 452.09,
+      "pct_error": 2.51
+    },
+    {
+      "actual": 22108.48,
+      "predicted": 20442.34,
+      "baseline": 24981.53,
+      "error": -1666.14,
+      "pct_error": 7.54
+    },
+    {
+      "actual": 47192.54,
+      "predicted": 45634.32,
+      "baseline": 24981.53,
+      "error": -1558.22,
+      "pct_error": 3.3
+    },
+    {
+      "actual": 21652.05,
+      "predicted": 22609.34,
+      "baseline": 24981.53,
+      "error": 957.29,
+      "pct_error": 4.42
+    },
+    {
+      "actual": 11660.55,
+      "predicted": 10763.85,
+      "baseline": 24981.53,
+      "error": -896.7,
+      "pct_error": 7.69
+    },
+    {
+      "actual": 6078.55,
+      "predicted": 6325.87,
+      "baseline": 24981.53,
+      "error": 247.32,
+      "pct_error": 4.07
+    },
+    {
+      "actual": 21302.14,
+      "predicted": 24985.43,
+      "baseline": 24981.53,
+      "error": 3683.29,
+      "pct_error": 17.29
+    },
+    {
+      "actual": 45835.32,
+      "predicted": 44339.56,
+      "baseline": 24981.53,
+      "error": -1495.76,
+      "pct_error": 3.26
+    },
+    {
+      "actual": 39183.41,
+      "predicted": 36302.16,
+      "baseline": 24981.53,
+      "error": -2881.25,
+      "pct_error": 7.35
+    },
+    {
+      "actual": 17095.59,
+      "predicted": 17692.07,
+      "baseline": 24981.53,
+      "error": 596.48,
+      "pct_error": 3.49
+    },
+    {
+      "actual": 56043.32,
+      "predicted": 49548.95,
+      "baseline": 24981.53,
+      "error": -6494.37,
+      "pct_error": 11.59
+    },
+    {
+      "actual": 35522.0,
+      "predicted": 35452.87,
+      "baseline": 24981.53,
+      "error": -69.13,
+      "pct_error": 0.19
+    },
+    {
+      "actual": 9814.79,
+      "predicted": 9135.56,
+      "baseline": 24981.53,
+      "error": -679.23,
+      "pct_error": 6.92
+    },
+    {
+      "actual": 33316.74,
+      "predicted": 39915.27,
+      "baseline": 24981.53,
+      "error": 6598.53,
+      "pct_error": 19.81
+    },
+    {
+      "actual": 28551.45,
+      "predicted": 25591.67,
+      "baseline": 24981.53,
+      "error": -2959.78,
+      "pct_error": 10.37
+    },
+    {
+      "actual": 41710.73,
+      "predicted": 38458.75,
+      "baseline": 24981.53,
+      "error": -3251.98,
+      "pct_error": 7.8
+    },
+    {
+      "actual": 53620.37,
+      "predicted": 44955.61,
+      "baseline": 24981.53,
+      "error": -8664.76,
+      "pct_error": 16.16
+    },
+    {
+      "actual": 21462.2,
+      "predicted": 24897.02,
+      "baseline": 24981.53,
+      "error": 3434.82,
+      "pct_error": 16.0
+    },
+    {
+      "actual": 9188.41,
+      "predicted": 8377.69,
+      "baseline": 24981.53,
+      "error": -810.72,
+      "pct_error": 8.82
+    },
+    {
+      "actual": 36466.89,
+      "predicted": 42124.43,
+      "baseline": 24981.53,
+      "error": 5657.54,
+      "pct_error": 15.51
+    },
+    {
+      "actual": 21417.2,
+      "predicted": 24470.87,
+      "baseline": 24981.53,
+      "error": 3053.67,
+      "pct_error": 14.26
+    },
+    {
+      "actual": 26602.0,
+      "predicted": 29553.08,
+      "baseline": 24981.53,
+      "error": 2951.08,
+      "pct_error": 11.09
+    },
+    {
+      "actual": 42433.51,
+      "predicted": 40656.04,
+      "baseline": 24981.53,
+      "error": -1777.47,
+      "pct_error": 4.19
+    },
+    {
+      "actual": 40257.48,
+      "predicted": 39899.5,
+      "baseline": 24981.53,
+      "error": -357.98,
+      "pct_error": 0.89
+    },
+    {
+      "actual": 43289.34,
+      "predicted": 38794.46,
+      "baseline": 24981.53,
+      "error": -4494.88,
+      "pct_error": 10.38
+    },
+    {
+      "actual": 12680.49,
+      "predicted": 11434.57,
+      "baseline": 24981.53,
+      "error": -1245.92,
+      "pct_error": 9.83
+    },
+    {
+      "actual": 32336.93,
+      "predicted": 38668.91,
+      "baseline": 24981.53,
+      "error": 6331.98,
+      "pct_error": 19.58
+    },
+    {
+      "actual": 6741.79,
+      "predicted": 7151.17,
+      "baseline": 24981.53,
+      "error": 409.38,
+      "pct_error": 6.07
+    },
+    {
+      "actual": 13885.5,
+      "predicted": 16953.27,
+      "baseline": 24981.53,
+      "error": 3067.77,
+      "pct_error": 22.09
+    },
+    {
+      "actual": 18634.85,
+      "predicted": 22985.43,
+      "baseline": 24981.53,
+      "error": 4350.58,
+      "pct_error": 23.35
+    },
+    {
+      "actual": 9211.62,
+      "predicted": 7623.11,
+      "baseline": 24981.53,
+      "error": -1588.51,
+      "pct_error": 17.24
+    },
+    {
+      "actual": 25628.63,
+      "predicted": 28905.11,
+      "baseline": 24981.53,
+      "error": 3276.48,
+      "pct_error": 12.78
+    },
+    {
+      "actual": 39448.59,
+      "predicted": 44492.72,
+      "baseline": 24981.53,
+      "error": 5044.13,
+      "pct_error": 12.79
+    },
+    {
+      "actual": 35977.69,
+      "predicted": 40993.66,
+      "baseline": 24981.53,
+      "error": 5015.97,
+      "pct_error": 13.94
+    },
+    {
+      "actual": 8508.18,
+      "predicted": 8557.37,
+      "baseline": 24981.53,
+      "error": 49.19,
+      "pct_error": 0.58
+    },
+    {
+      "actual": 41960.33,
+      "predicted": 35223.47,
+      "baseline": 24981.53,
+      "error": -6736.86,
+      "pct_error": 16.06
+    },
+    {
+      "actual": 11031.59,
+      "predicted": 11378.57,
+      "baseline": 24981.53,
+      "error": 346.98,
+      "pct_error": 3.15
+    },
+    {
+      "actual": 35089.91,
+      "predicted": 30665.53,
+      "baseline": 24981.53,
+      "error": -4424.38,
+      "pct_error": 12.61
+    },
+    {
+      "actual": 29653.89,
+      "predicted": 25925.35,
+      "baseline": 24981.53,
+      "error": -3728.54,
+      "pct_error": 12.57
+    }
+  ],
+  "residual_distribution": [
+    {
+      "bin": "-9556 to -8341",
+      "count": 11
+    },
+    {
+      "bin": "-8341 to -7125",
+      "count": 14
+    },
+    {
+      "bin": "-7125 to -5910",
+      "count": 23
+    },
+    {
+      "bin": "-5910 to -4694",
+      "count": 31
+    },
+    {
+      "bin": "-4694 to -3479",
+      "count": 66
+    },
+    {
+      "bin": "-3479 to -2263",
+      "count": 87
+    },
+    {
+      "bin": "-2263 to -1048",
+      "count": 117
+    },
+    {
+      "bin": "-1048 to 168",
+      "count": 207
+    },
+    {
+      "bin": "168 to 1383",
+      "count": 159
+    },
+    {
+      "bin": "1383 to 2599",
+      "count": 91
+    },
+    {
+      "bin": "2599 to 3814",
+      "count": 62
+    },
+    {
+      "bin": "3814 to 5030",
+      "count": 49
+    },
+    {
+      "bin": "5030 to 6245",
+      "count": 41
+    },
+    {
+      "bin": "6245 to 7461",
+      "count": 19
+    },
+    {
+      "bin": "7461 to 8677",
+      "count": 23
+    }
+  ],
+  "feature_names": [
+    "Total Waste (Tons)",
+    "Avg Waste per Capita (Kg)",
+    "Population (Million)",
+    "Household Waste (%)",
+    "Year",
+    "Country_Australia",
+    "Country_Brazil",
+    "Country_Canada",
+    "Country_China",
+    "Country_France",
+    "Country_Germany",
+    "Country_India",
+    "Country_Indonesia",
+    "Country_Italy",
+    "Country_Japan",
+    "Country_Mexico",
+    "Country_Russia",
+    "Country_Saudi Arabia",
+    "Country_South Africa",
+    "Country_South Korea",
+    "Country_Spain",
+    "Country_Turkey",
+    "Country_UK",
+    "Country_USA",
+    "Food Category_Beverages",
+    "Food Category_Dairy Products",
+    "Food Category_Frozen Food",
+    "Food Category_Fruits & Vegetables",
+    "Food Category_Grains & Cereals",
+    "Food Category_Meat & Seafood",
+    "Food Category_Prepared Food"
+  ],
+  "categories": [
+    "Bakery Items",
+    "Beverages",
+    "Dairy Products",
+    "Frozen Food",
+    "Fruits & Vegetables",
+    "Grains & Cereals",
+    "Meat & Seafood",
+    "Prepared Food"
+  ],
+  "countries": [
+    "Argentina",
+    "Australia",
+    "Brazil",
+    "Canada",
+    "China",
+    "France",
+    "Germany",
+    "India",
+    "Indonesia",
+    "Italy",
+    "Japan",
+    "Mexico",
+    "Russia",
+    "Saudi Arabia",
+    "South Africa",
+    "South Korea",
+    "Spain",
+    "Turkey",
+    "UK",
+    "USA"
+  ],
+  "years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "carbon_conversion_factors": {
+    "note": "UNEP / FAO Greenhouse Gas Emission equivalents: average 2.5 kg CO2e per 1 kg food waste",
+    "co2e_kg_per_kg_waste": 2.5
+  }
+}
