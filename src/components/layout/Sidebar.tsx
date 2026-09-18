@@ -14,6 +14,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Leaf,
+  Activity,
+  Layers,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -23,40 +25,63 @@ interface SidebarProps {
   setMobileOpen: (open: boolean) => void;
 }
 
-const navItems = [
+const navSections = [
   {
-    name: 'Dashboard',
-    href: '/',
-    icon: LayoutDashboard,
-    badge: 'Real CSV',
+    heading: 'Analytics & Data',
+    items: [
+      {
+        name: 'Dashboard',
+        href: '/',
+        icon: LayoutDashboard,
+        badge: 'Live',
+        badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      },
+      {
+        name: 'Data Explorer',
+        href: '/data-explorer',
+        icon: Database,
+        badge: '5k Rows',
+        badgeColor: 'bg-slate-800 text-slate-300 border-slate-700',
+      },
+    ],
   },
   {
-    name: 'AI Predictor',
-    href: '/predict',
-    icon: BrainCircuit,
-    badge: 'Ridge ML',
+    heading: 'AI & Interventions',
+    items: [
+      {
+        name: 'AI Predictor',
+        href: '/predict',
+        icon: BrainCircuit,
+        badge: 'Ridge ML',
+        badgeColor: 'bg-lime-500/20 text-lime-300 border-lime-500/30',
+      },
+      {
+        name: 'Waste Insights',
+        href: '/insights',
+        icon: Lightbulb,
+        badge: '6 Playbooks',
+        badgeColor: 'bg-teal-500/20 text-teal-300 border-teal-500/30',
+      },
+    ],
   },
   {
-    name: 'Waste Insights',
-    href: '/insights',
-    icon: Lightbulb,
-  },
-  {
-    name: 'Data Explorer',
-    href: '/data-explorer',
-    icon: Database,
-    badge: '5k Rows',
-  },
-  {
-    name: 'Model Performance',
-    href: '/model-performance',
-    icon: LineChart,
-    badge: 'R² 0.95',
-  },
-  {
-    name: 'About & Academic',
-    href: '/about',
-    icon: GraduationCap,
+    heading: 'Academic & Evaluation',
+    items: [
+      {
+        name: 'Model Benchmarking',
+        href: '/model-performance',
+        icon: LineChart,
+        badge: 'R² 0.95',
+        badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      },
+      {
+        name: 'Academic Defense',
+        href: '/about',
+        icon: GraduationCap,
+        badge: 'Deck',
+        badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+      },
+    ],
   },
 ];
 
@@ -73,108 +98,120 @@ export default function Sidebar({
       {/* Mobile Backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/75 backdrop-blur-md lg:hidden transition-opacity"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* Sidebar Shell */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-slate-950/95 backdrop-blur-md border-r border-emerald-900/30 text-white transition-all duration-300 ease-in-out lg:static ${
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-slate-950/90 backdrop-blur-2xl border-r border-emerald-500/15 text-slate-200 transition-all duration-300 ease-in-out lg:static ${
           collapsed ? 'w-20' : 'w-72'
         } ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
         {/* Brand Header */}
-        <div className="flex items-center justify-between h-20 px-5 border-b border-emerald-900/30">
+        <div className="flex items-center justify-between h-20 px-5 border-b border-emerald-500/10">
           <Link
             href="/"
             className="flex items-center gap-3 group focus:outline-none"
             onClick={() => setMobileOpen(false)}
           >
-            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-glow text-white">
-              <Leaf className="w-6 h-6 transform group-hover:scale-110 transition-transform" />
+            <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400 via-emerald-600 to-forest-800 shadow-glow text-white group-hover:scale-105 transition-transform duration-200">
+              <Leaf className="w-5 h-5 drop-shadow-sm" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-lime-400 border-2 border-slate-950" />
             </div>
             {!collapsed && (
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-lg tracking-tight text-white">
+                  <span className="font-extrabold text-lg tracking-tight text-white">
                     WasteLess <span className="text-emerald-400">AI</span>
                   </span>
-                  <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 rounded border border-emerald-500/30">
-                    v1.0
-                  </span>
                 </div>
-                <p className="text-[11px] text-emerald-300/60 font-medium">
-                  Smart Waste Intelligence
+                <p className="text-[10px] uppercase font-bold tracking-wider text-emerald-400/80">
+                  Global Food Intelligence
                 </p>
               </div>
             )}
           </Link>
 
-          {/* Desktop Collapse Toggle */}
+          {/* Desktop Collapse Button */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/50 text-emerald-400 border border-emerald-800/40 transition-colors"
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="hidden lg:flex items-center justify-center w-8 h-8 rounded-xl bg-slate-900/80 hover:bg-emerald-950/60 text-slate-400 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/50 transition-all shadow-sm"
+            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
+        {/* Navigation Sections */}
+        <nav className="flex-1 px-3 py-6 space-y-6 overflow-y-auto">
+          {navSections.map((section, sIdx) => (
+            <div key={sIdx} className="space-y-1.5">
+              {!collapsed && (
+                <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  {section.heading}
+                </div>
+              )}
+              {section.items.map((item) => {
+                const isActive = pathname === item.href;
+                const Icon = item.icon;
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all group ${
-                  isActive
-                    ? 'bg-gradient-to-r from-emerald-600/30 to-emerald-500/10 text-emerald-300 border border-emerald-500/30 shadow-sm'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-900/70 border border-transparent'
-                }`}
-              >
-                <Icon
-                  className={`w-5 h-5 flex-shrink-0 transition-colors ${
-                    isActive ? 'text-emerald-400' : 'text-slate-400 group-hover:text-emerald-300'
-                  }`}
-                />
-                {!collapsed && (
-                  <div className="flex items-center justify-between flex-1">
-                    <span>{item.name}</span>
-                    {item.badge && (
-                      <span
-                        className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
-                          isActive
-                            ? 'bg-emerald-500/20 text-emerald-300'
-                            : 'bg-slate-800/80 text-slate-400'
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`relative flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-xs font-semibold transition-all group ${
+                      isActive
+                        ? 'bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-transparent text-emerald-300 border border-emerald-500/30 shadow-card'
+                        : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900/60 border border-transparent'
+                    }`}
+                  >
+                    {isActive && (
+                      <div className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-emerald-400 shadow-glow" />
                     )}
-                  </div>
-                )}
-              </Link>
-            );
-          })}
+                    <Icon
+                      className={`w-4 h-4 flex-shrink-0 transition-colors ${
+                        isActive ? 'text-emerald-400' : 'text-slate-500 group-hover:text-emerald-300'
+                      }`}
+                    />
+                    {!collapsed && (
+                      <div className="flex items-center justify-between flex-1">
+                        <span className="truncate">{item.name}</span>
+                        {item.badge && (
+                          <span
+                            className={`text-[9px] px-2 py-0.5 rounded-full font-bold border ${item.badgeColor}`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
-        {/* Footer Status Pill */}
+        {/* Live Engine Telemetry Pill */}
         {!collapsed && (
-          <div className="p-4 mx-3 mb-4 rounded-xl bg-gradient-to-b from-emerald-950/40 to-slate-900/80 border border-emerald-900/40">
-            <div className="flex items-center gap-2 mb-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-400" />
-              <span className="text-xs font-semibold text-emerald-200">
-                Academic Research Core
+          <div className="p-4 mx-3 mb-4 rounded-2xl bg-slate-900/70 border border-emerald-500/20 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                Engine Telemetry
+              </span>
+              <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                Ridge v1
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              Trained on 5,000 real global food wastage observations across 20 countries.
+            <p className="text-[11px] text-slate-300 leading-snug">
+              5,000 verified rows loaded across 20 countries with zero synthetic missing values.
             </p>
           </div>
         )}

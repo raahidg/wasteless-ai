@@ -12,21 +12,17 @@ import {
   ArrowUpDown,
   Download,
   Eye,
-  Search,
+  SlidersHorizontal,
 } from 'lucide-react';
 
 export default function DataTable() {
   const { filteredRecords, setToastMessage } = useData();
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
-
-  // Sorting state
   const [sortColumn, setSortColumn] = useState<keyof FoodWasteRecord>('id');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-  // Column visibility state
   const [visibleColumns, setVisibleColumns] = useState({
     id: true,
     country: true,
@@ -41,7 +37,6 @@ export default function DataTable() {
 
   const [colMenuOpen, setColMenuOpen] = useState(false);
 
-  // Sorted records
   const sortedRecords = useMemo(() => {
     return [...filteredRecords].sort((a, b) => {
       const valA = a[sortColumn];
@@ -58,7 +53,6 @@ export default function DataTable() {
     });
   }, [filteredRecords, sortColumn, sortDirection]);
 
-  // Paginated records
   const totalPages = Math.max(1, Math.ceil(sortedRecords.length / pageSize));
   const paginatedRecords = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
@@ -76,37 +70,37 @@ export default function DataTable() {
   };
 
   const handleExport = () => {
-    exportToCSV(filteredRecords, `food_waste_dataset_${filteredRecords.length}_rows.csv`);
+    exportToCSV(filteredRecords, `food_waste_data_${filteredRecords.length}_rows.csv`);
     setToastMessage(`Exported ${filteredRecords.length} records as CSV.`);
   };
 
   return (
-    <div className="bg-slate-900/90 border border-emerald-900/30 rounded-2xl shadow-card overflow-hidden">
+    <div className="bg-slate-900/80 border border-emerald-500/20 rounded-3xl shadow-card backdrop-blur-xl overflow-hidden">
       {/* Table Toolbar */}
-      <div className="p-4 sm:p-5 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+      <div className="p-5 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
           <span className="text-xs font-semibold text-slate-300">
-            Showing{' '}
-            <span className="text-emerald-400 font-bold">
+            Cohort:{' '}
+            <span className="text-emerald-400 font-mono font-bold">
               {Math.min(sortedRecords.length, (currentPage - 1) * pageSize + 1)}-
               {Math.min(sortedRecords.length, currentPage * pageSize)}
             </span>{' '}
-            of <span className="text-white font-bold">{sortedRecords.length.toLocaleString()}</span> records
+            of <span className="text-white font-mono font-bold">{sortedRecords.length.toLocaleString()}</span> records
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Column Visibility Menu */}
+          {/* Column Toggle Menu */}
           <div className="relative">
             <button
               onClick={() => setColMenuOpen(!colMenuOpen)}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 rounded-xl transition-all"
             >
               <Eye className="w-3.5 h-3.5 text-emerald-400" />
               <span>Columns</span>
             </button>
             {colMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-slate-950 border border-slate-800 rounded-xl p-3 shadow-2xl z-30 space-y-1.5 text-xs">
+              <div className="absolute right-0 mt-2 w-52 bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-2xl z-30 space-y-2 text-xs backdrop-blur-xl">
                 {Object.keys(visibleColumns).map((col) => (
                   <label key={col} className="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white">
                     <input
@@ -127,25 +121,25 @@ export default function DataTable() {
             )}
           </div>
 
-          {/* Page Size Selector */}
+          {/* Page Size */}
           <select
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
               setCurrentPage(1);
             }}
-            className="px-2.5 py-1.5 text-xs font-medium bg-slate-950/80 border border-slate-800 rounded-lg text-slate-300 focus:outline-none focus:border-emerald-500"
+            className="px-3 py-1.5 text-xs font-bold bg-slate-950/80 border border-slate-800 rounded-xl text-slate-300 focus:outline-none focus:border-emerald-500 font-mono"
           >
-            <option value={15}>15 per page</option>
-            <option value={25}>25 per page</option>
-            <option value={50}>50 per page</option>
-            <option value={100}>100 per page</option>
+            <option value={15}>15 / page</option>
+            <option value={25}>25 / page</option>
+            <option value={50}>50 / page</option>
+            <option value={100}>100 / page</option>
           </select>
 
           {/* Export Button */}
           <button
             onClick={handleExport}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl transition-all shadow-glow hover:scale-[1.02] active:scale-[0.98]"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -156,95 +150,95 @@ export default function DataTable() {
       {/* Table Container */}
       <div className="overflow-x-auto max-h-[600px]">
         <table className="w-full text-left text-xs border-collapse">
-          <thead className="sticky top-0 bg-slate-950/95 backdrop-blur-md z-10 border-b border-slate-800 text-slate-400 font-semibold tracking-wider uppercase">
+          <thead className="sticky top-0 bg-slate-950/95 backdrop-blur-xl z-10 border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
             <tr>
               {visibleColumns.id && (
                 <th
                   onClick={() => handleSort('id')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
                 >
                   <div className="flex items-center gap-1">
-                    ID <ArrowUpDown className="w-3 h-3" />
+                    ID <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.country && (
                 <th
                   onClick={() => handleSort('country')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
                 >
                   <div className="flex items-center gap-1">
-                    Country <ArrowUpDown className="w-3 h-3" />
+                    Country <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.year && (
                 <th
                   onClick={() => handleSort('year')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
                 >
                   <div className="flex items-center gap-1">
-                    Year <ArrowUpDown className="w-3 h-3" />
+                    Year <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.foodCategory && (
                 <th
                   onClick={() => handleSort('foodCategory')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap"
                 >
                   <div className="flex items-center gap-1">
-                    Food Category <ArrowUpDown className="w-3 h-3" />
+                    Food Category <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.totalWasteTons && (
                 <th
                   onClick={() => handleSort('totalWasteTons')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
                 >
                   <div className="flex items-center justify-end gap-1">
-                    Waste (Tons) <ArrowUpDown className="w-3 h-3" />
+                    Waste (Tons) <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.economicLossMillion && (
                 <th
                   onClick={() => handleSort('economicLossMillion')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
                 >
                   <div className="flex items-center justify-end gap-1">
-                    Economic Loss ($M) <ArrowUpDown className="w-3 h-3" />
+                    Loss ($M) <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.avgWastePerCapitaKg && (
                 <th
                   onClick={() => handleSort('avgWastePerCapitaKg')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
                 >
                   <div className="flex items-center justify-end gap-1">
-                    Waste/Capita (Kg) <ArrowUpDown className="w-3 h-3" />
+                    Waste/Capita (Kg) <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.populationMillion && (
                 <th
                   onClick={() => handleSort('populationMillion')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
                 >
                   <div className="flex items-center justify-end gap-1">
-                    Population (M) <ArrowUpDown className="w-3 h-3" />
+                    Population (M) <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
               {visibleColumns.householdWastePct && (
                 <th
                   onClick={() => handleSort('householdWastePct')}
-                  className="py-3 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
+                  className="py-3.5 px-4 cursor-pointer hover:text-emerald-400 select-none whitespace-nowrap text-right"
                 >
                   <div className="flex items-center justify-end gap-1">
-                    Household (%) <ArrowUpDown className="w-3 h-3" />
+                    Household (%) <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
               )}
@@ -262,34 +256,34 @@ export default function DataTable() {
                   </td>
                 )}
                 {visibleColumns.country && (
-                  <td className="py-2.5 px-4 font-sans font-medium text-white group-hover:text-emerald-300">
+                  <td className="py-2.5 px-4 font-sans font-bold text-white group-hover:text-emerald-300">
                     {row.country}
                   </td>
                 )}
                 {visibleColumns.year && (
-                  <td className="py-2.5 px-4 text-slate-300">
+                  <td className="py-2.5 px-4 text-slate-400">
                     {row.year}
                   </td>
                 )}
                 {visibleColumns.foodCategory && (
                   <td className="py-2.5 px-4 font-sans">
-                    <span className="px-2 py-0.5 rounded-md bg-slate-950 text-slate-300 border border-slate-800">
+                    <span className="px-2.5 py-0.5 rounded-lg bg-slate-950 text-slate-300 border border-slate-800 text-[11px]">
                       {row.foodCategory}
                     </span>
                   </td>
                 )}
                 {visibleColumns.totalWasteTons && (
-                  <td className="py-2.5 px-4 text-right font-bold text-emerald-400">
+                  <td className="py-2.5 px-4 text-right font-black text-emerald-400">
                     {row.totalWasteTons.toLocaleString()}
                   </td>
                 )}
                 {visibleColumns.economicLossMillion && (
-                  <td className="py-2.5 px-4 text-right font-bold text-amber-400">
+                  <td className="py-2.5 px-4 text-right font-black text-amber-400">
                     ${row.economicLossMillion.toLocaleString()}
                   </td>
                 )}
                 {visibleColumns.avgWastePerCapitaKg && (
-                  <td className="py-2.5 px-4 text-right">
+                  <td className="py-2.5 px-4 text-right text-slate-300">
                     {row.avgWastePerCapitaKg}
                   </td>
                 )}
@@ -309,48 +303,48 @@ export default function DataTable() {
         </table>
       </div>
 
-      {/* Pagination Footer */}
-      <div className="p-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Pagination Bar */}
+      <div className="p-4 sm:p-5 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
         <span className="text-xs text-slate-400">
-          Page <span className="font-bold text-white">{currentPage}</span> of{' '}
-          <span className="font-bold text-white">{totalPages}</span>
+          Page <span className="font-bold text-white font-mono">{currentPage}</span> of{' '}
+          <span className="font-bold text-white font-mono">{totalPages}</span>
         </span>
 
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => setCurrentPage(1)}
             disabled={currentPage === 1}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            title="First page"
+            className="p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            title="First Page"
           >
             <ChevronsLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            title="Previous page"
+            className="p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            title="Previous Page"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
 
-          <span className="px-3 py-1 text-xs font-semibold bg-emerald-950/70 border border-emerald-700/40 text-emerald-300 rounded-lg">
+          <span className="px-3.5 py-1 text-xs font-black font-mono bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 rounded-xl">
             {currentPage}
           </span>
 
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            title="Next page"
+            className="p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            title="Next Page"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
           <button
             onClick={() => setCurrentPage(totalPages)}
             disabled={currentPage === totalPages}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
-            title="Last page"
+            className="p-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            title="Last Page"
           >
             <ChevronsRight className="w-4 h-4" />
           </button>

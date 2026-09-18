@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { useData } from '@/context/DataContext';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -12,7 +12,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { toastMessage, setToastMessage } = useData();
 
   return (
-    <div className="min-h-screen flex bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-white">
+    <div className="relative min-h-screen flex bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-white">
+      {/* Ambient background light gradients */}
+      <div className="fixed top-0 left-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-forest-900/15 rounded-full blur-3xl pointer-events-none -z-10" />
+
       {/* Sidebar Navigation */}
       <Sidebar
         collapsed={collapsed}
@@ -31,20 +35,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* Global Footer */}
         <footer className="py-6 px-8 border-t border-slate-900 text-center text-xs text-slate-500">
-          <p>
-            WasteLess AI • Smart Food Waste Prediction & Prevention System • Academic Project
+          <p className="font-semibold text-slate-400">
+            WasteLess AI • Smart Food Waste Prediction & Prevention System
           </p>
           <p className="mt-1 text-[11px] text-slate-600">
-            Powered by Empirical Data Analysis of 5,000 Global Records (2018–2024) • UNEP Food Loss Standards
+            United Nations SDG 12.3 Research Benchmark • 5,000 Verified Observations • UNEP GHG Standards
           </p>
         </footer>
       </div>
 
       {/* Toast Notification Container */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900/95 border border-emerald-500/40 text-emerald-300 shadow-2xl backdrop-blur-md animate-bounce-short">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/95 border border-emerald-500/40 text-emerald-300 shadow-2xl backdrop-blur-xl animate-bounce-short">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-          <span className="text-sm font-medium text-slate-200">{toastMessage}</span>
+          <span className="text-xs font-semibold text-slate-200">{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
             className="ml-2 text-xs text-slate-400 hover:text-white"

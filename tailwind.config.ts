@@ -41,22 +41,27 @@ const config: Config = {
           glow: "#a3e635",
         },
         slate: {
-          850: "#151e2e",
-          900: "#0f172a",
-          950: "#020617",
-        }
-      },
-      fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
+          850: "#111827",
+          900: "#0b1220",
+          925: "#080e1a",
+          950: "#030712",
+        },
       },
       boxShadow: {
-        'card': '0 4px 20px -2px rgba(16, 185, 129, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
-        'glow': '0 0 25px -5px rgba(16, 185, 129, 0.25)',
+        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 0 15px -3px rgba(16, 185, 129, 0.08)',
+        'card-hover': '0 10px 30px -4px rgba(0, 0, 0, 0.6), 0 0 25px -2px rgba(16, 185, 129, 0.2)',
+        'glow': '0 0 30px -5px rgba(16, 185, 129, 0.35)',
+        'glow-lg': '0 0 50px -10px rgba(16, 185, 129, 0.45)',
+        'glow-lime': '0 0 30px -5px rgba(132, 204, 22, 0.35)',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'subtle-glow': 'radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 60%)',
-      }
+        'mesh-glow': 'radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.18) 0%, transparent 70%)',
+        'subtle-emerald': 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 78, 59, 0.05) 100%)',
+        'glass-card': 'linear-gradient(145deg, rgba(17, 24, 39, 0.75) 0%, rgba(11, 18, 32, 0.85) 100%)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
     },
   },
   plugins: [],

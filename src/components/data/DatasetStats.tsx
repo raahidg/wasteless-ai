@@ -6,10 +6,10 @@ import {
   Database,
   CheckCircle2,
   FileCheck,
-  AlertCircle,
   Upload,
   RotateCcw,
   Sparkles,
+  ShieldCheck,
 } from 'lucide-react';
 
 export default function DatasetStats() {
@@ -33,7 +33,7 @@ export default function DatasetStats() {
     {
       label: 'Missing Values (NaN)',
       value: '0 (0.00%)',
-      sub: 'Complete data integrity',
+      sub: 'Zero data gaps',
       icon: CheckCircle2,
       color: 'text-emerald-400',
     },
@@ -45,19 +45,19 @@ export default function DatasetStats() {
       color: 'text-emerald-400',
     },
     {
-      label: 'Observed Geographic Span',
+      label: 'Observed Nations',
       value: '20 Nations',
       sub: 'Across 6 continents',
     },
     {
-      label: 'Temporal Range',
+      label: 'Temporal Coverage',
       value: '2018 – 2024',
       sub: '7 calendar years',
     },
     {
       label: 'Food Categories',
       value: '8 Classes',
-      sub: 'Perishable to shelf-stable',
+      sub: 'Perishable to grain',
     },
   ];
 
@@ -114,52 +114,54 @@ export default function DatasetStats() {
 
   return (
     <div className="space-y-6">
-      {/* Overview Cards */}
+      {/* 6 Key Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {stats.map((s, idx) => (
           <div
             key={idx}
-            className="p-4 rounded-2xl bg-slate-900/90 border border-emerald-900/30 shadow-card"
+            className="p-5 rounded-3xl bg-slate-900/80 border border-emerald-500/20 shadow-card backdrop-blur-xl"
           >
-            <span className="text-[11px] font-semibold text-slate-400 block mb-1">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
               {s.label}
             </span>
-            <span className="text-lg font-bold text-white block">
+            <span className="text-xl font-black text-white block font-mono">
               {s.value}
             </span>
-            <span className="text-[10px] text-emerald-400/80 font-medium">
+            <span className="text-[10px] text-emerald-400/80 font-semibold mt-0.5 block">
               {s.sub}
             </span>
           </div>
         ))}
       </div>
 
-      {/* Dataset Description & CSV Upload Section */}
+      {/* Dataset Schema & Custom CSV Uploader */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Column Schema Dictionary */}
-        <div className="lg:col-span-2 bg-slate-900/90 border border-emerald-900/30 rounded-2xl p-5 shadow-card space-y-4">
+        {/* Schema Dictionary */}
+        <div className="lg:col-span-2 bg-slate-900/80 border border-emerald-500/20 rounded-3xl p-6 shadow-card backdrop-blur-xl space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+            <h4 className="text-sm font-extrabold text-white flex items-center gap-2">
               <Database className="w-4 h-4 text-emerald-400" />
-              Dataset Schema & Feature Definitions
+              Dataset Feature Dictionary
             </h4>
-            <span className="text-xs text-slate-400">8 Columns • 0 Missing</span>
+            <span className="text-xs text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2.5 py-1 rounded-xl border border-emerald-500/20">
+              8 Standard Columns
+            </span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-800 text-slate-400 uppercase font-semibold">
+              <thead className="border-b border-slate-800 text-slate-400 uppercase font-bold text-[10px] tracking-wider">
                 <tr>
-                  <th className="py-2.5 px-3">Column Name</th>
-                  <th className="py-2.5 px-3">Data Type</th>
+                  <th className="py-2.5 px-3">Column</th>
+                  <th className="py-2.5 px-3">Type</th>
                   <th className="py-2.5 px-3">Description</th>
                   <th className="py-2.5 px-3">Range / Sample</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60 text-slate-300">
                 {columnDictionary.map((cd, i) => (
-                  <tr key={i} className="hover:bg-slate-800/30">
-                    <td className="py-2.5 px-3 font-semibold text-white whitespace-nowrap">
+                  <tr key={i} className="hover:bg-slate-800/30 transition-colors">
+                    <td className="py-2.5 px-3 font-bold text-white whitespace-nowrap">
                       {cd.col}
                     </td>
                     <td className="py-2.5 px-3 font-mono text-[11px] text-emerald-400">
@@ -178,19 +180,19 @@ export default function DatasetStats() {
           </div>
         </div>
 
-        {/* Custom Dataset Uploader Card */}
-        <div className="bg-slate-900/90 border border-emerald-900/30 rounded-2xl p-5 shadow-card flex flex-col justify-between space-y-4">
+        {/* Custom Dataset Uploader */}
+        <div className="bg-slate-900/80 border border-emerald-500/20 rounded-3xl p-6 shadow-card backdrop-blur-xl flex flex-col justify-between space-y-5">
           <div className="space-y-2">
-            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+            <h4 className="text-sm font-extrabold text-white flex items-center gap-2">
               <Upload className="w-4 h-4 text-emerald-400" />
               Upload Custom CSV Dataset
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Test WasteLess AI against your own food loss data. File must match the 8 standard columns.
+              Test WasteLess AI with your own supply loss data. Uploaded CSV must match the 8 standard schema columns.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-dashed border-emerald-800/60 text-center space-y-3">
+          <div className="p-5 rounded-2xl bg-slate-950/80 border border-dashed border-emerald-500/40 text-center space-y-3">
             <input
               type="file"
               ref={fileInputRef}
@@ -201,29 +203,29 @@ export default function DatasetStats() {
             />
             <label
               htmlFor="csv-upload-input"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold cursor-pointer transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer transition-all shadow-glow hover:scale-[1.02] active:scale-[0.98]"
             >
               <Upload className="w-4 h-4" />
               <span>Select CSV File</span>
             </label>
-            <p className="text-[10px] text-slate-500">
-              CSV with headers: Country, Year, Food Category, Total Waste (Tons), etc.
+            <p className="text-[10px] text-slate-500 font-mono">
+              Headers: Country, Year, Food Category, Total Waste (Tons), etc.
             </p>
           </div>
 
           {isCustomDataLoaded && (
             <button
               onClick={resetToOriginalData}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-amber-300 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800/40 rounded-xl transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-bold text-amber-300 bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800/40 rounded-xl transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Restore Original 5,000-Row Dataset</span>
+              <span>Restore Built-in 5,000-Row Dataset</span>
             </button>
           )}
 
-          <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
+          <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2.5">
             <FileCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-            <span>Built-in dataset: global_food_wastage_dataset.csv (320 KB)</span>
+            <span className="font-mono">Active: global_food_wastage_dataset.csv (320 KB)</span>
           </div>
         </div>
       </div>

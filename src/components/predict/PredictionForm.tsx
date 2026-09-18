@@ -9,11 +9,9 @@ import {
   Sliders,
   Scale,
   Globe,
-  Utensils,
   Home,
-  Users,
-  Calendar,
   RotateCcw,
+  Zap,
 } from 'lucide-react';
 
 interface Props {
@@ -32,15 +30,17 @@ export default function PredictionForm({ countries, categories }: Props) {
     year: 2024,
   });
 
-  const [result, setResult] = useState<PredictionOutput>(() => predictFoodWasteLoss({
-    country: countries[0] || 'USA',
-    foodCategory: categories[0] || 'Fruits & Vegetables',
-    totalWasteTons: 25000,
-    avgWastePerCapitaKg: 109,
-    populationMillion: 700,
-    householdWastePct: 50,
-    year: 2024,
-  }));
+  const [result, setResult] = useState<PredictionOutput>(() =>
+    predictFoodWasteLoss({
+      country: countries[0] || 'USA',
+      foodCategory: categories[0] || 'Fruits & Vegetables',
+      totalWasteTons: 25000,
+      avgWastePerCapitaKg: 109,
+      populationMillion: 700,
+      householdWastePct: 50,
+      year: 2024,
+    })
+  );
 
   const handleCalculate = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -60,88 +60,98 @@ export default function PredictionForm({ countries, categories }: Props) {
 
   return (
     <div className="space-y-8">
-      {/* Preset Scenario Buttons */}
-      <div className="bg-slate-900/90 border border-emerald-900/30 rounded-2xl p-4 shadow-card">
-        <span className="text-xs font-semibold text-slate-400 block mb-2.5">
-          Quick Case Study Presets:
+      {/* Quick Scenario Archetypes */}
+      <div className="bg-slate-900/80 border border-emerald-500/20 rounded-3xl p-5 shadow-card backdrop-blur-xl">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-3 flex items-center gap-1.5">
+          <Zap className="w-3.5 h-3.5 text-emerald-400" />
+          Industry Scenario Archetypes
         </span>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <button
             type="button"
             onClick={() => applyPreset(3500, 'Bakery Items')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/50 rounded-lg transition-all"
+            className="p-3 text-left rounded-2xl bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-white border border-slate-800 hover:border-emerald-500/40 transition-all group"
           >
-            🥖 Regional Bakery Hub (3.5k Tons)
+            <span className="text-base block mb-1">🥖</span>
+            <span className="text-xs font-bold block group-hover:text-emerald-300">Regional Bakery</span>
+            <span className="text-[10px] text-slate-500 font-mono">3,500 Tons • Fast staling</span>
           </button>
+
           <button
             type="button"
             onClick={() => applyPreset(12000, 'Fruits & Vegetables')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/50 rounded-lg transition-all"
+            className="p-3 text-left rounded-2xl bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-white border border-slate-800 hover:border-emerald-500/40 transition-all group"
           >
-            🍎 Wholesale Fresh Produce (12k Tons)
+            <span className="text-base block mb-1">🥦</span>
+            <span className="text-xs font-bold block group-hover:text-emerald-300">Fresh Produce</span>
+            <span className="text-[10px] text-slate-500 font-mono">12,000 Tons • Perishable</span>
           </button>
+
           <button
             type="button"
             onClick={() => applyPreset(28000, 'Prepared Food')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/50 rounded-lg transition-all"
+            className="p-3 text-left rounded-2xl bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-white border border-slate-800 hover:border-emerald-500/40 transition-all group"
           >
-            🍱 Metro Foodservice & Hospitality (28k Tons)
+            <span className="text-base block mb-1">🍱</span>
+            <span className="text-xs font-bold block group-hover:text-emerald-300">Metro Foodservice</span>
+            <span className="text-[10px] text-slate-500 font-mono">28,000 Tons • Daily scrap</span>
           </button>
+
           <button
             type="button"
             onClick={() => applyPreset(46000, 'Meat & Seafood')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-emerald-300 border border-slate-800 hover:border-emerald-700/50 rounded-lg transition-all"
+            className="p-3 text-left rounded-2xl bg-slate-950/80 hover:bg-emerald-950/40 text-slate-300 hover:text-white border border-slate-800 hover:border-emerald-500/40 transition-all group"
           >
-            🥩 National Cold Chain Supply (46k Tons)
+            <span className="text-base block mb-1">🥩</span>
+            <span className="text-xs font-bold block group-hover:text-emerald-300">Cold Chain Supply</span>
+            <span className="text-[10px] text-slate-500 font-mono">46,000 Tons • High emission</span>
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Form Inputs (5 cols on lg) */}
+        {/* Form Controls Console (5 cols on lg) */}
         <div className="lg:col-span-5">
           <form
             onSubmit={handleCalculate}
-            className="bg-slate-900/90 border border-emerald-900/30 rounded-2xl p-6 shadow-card space-y-5"
+            className="bg-slate-900/80 border border-emerald-500/20 rounded-3xl p-6 shadow-card backdrop-blur-xl space-y-5"
           >
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-emerald-400" />
                 Inference Parameters
               </h3>
-              <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold font-mono">
                 Ridge ML Model
               </span>
             </div>
 
-            {/* Food Category */}
+            {/* Food Category Selector */}
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold text-slate-300 mb-2">
                 Food Category
               </label>
-              <div className="relative">
-                <select
-                  value={input.foodCategory}
-                  onChange={(e) => {
-                    const updated = { ...input, foodCategory: e.target.value };
-                    setInput(updated);
-                    setResult(predictFoodWasteLoss(updated));
-                  }}
-                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-700/80 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
-                >
-                  {categories.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                value={input.foodCategory}
+                onChange={(e) => {
+                  const updated = { ...input, foodCategory: e.target.value };
+                  setInput(updated);
+                  setResult(predictFoodWasteLoss(updated));
+                }}
+                className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-2xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+              >
+                {categories.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Country */}
+            {/* Country Selector */}
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Country / Region
+              <label className="block text-xs font-bold text-slate-300 mb-2">
+                Sovereign Nation
               </label>
               <select
                 value={input.country}
@@ -150,7 +160,7 @@ export default function PredictionForm({ countries, categories }: Props) {
                   setInput(updated);
                   setResult(predictFoodWasteLoss(updated));
                 }}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-700/80 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-2xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
               >
                 {countries.map((c) => (
                   <option key={c} value={c}>
@@ -160,13 +170,13 @@ export default function PredictionForm({ countries, categories }: Props) {
               </select>
             </div>
 
-            {/* Total Waste (Tons) */}
-            <div>
-              <div className="flex items-center justify-between text-xs text-slate-300 mb-1.5">
-                <span className="flex items-center gap-1 font-medium">
-                  <Scale className="w-3.5 h-3.5 text-emerald-400" /> Total Waste (Tons)
+            {/* Total Waste (Tons) Slider */}
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="flex items-center gap-1 font-bold text-slate-300">
+                  <Scale className="w-3.5 h-3.5 text-emerald-400" /> Waste Volume
                 </span>
-                <span className="font-bold text-emerald-400 text-sm">
+                <span className="font-mono font-black text-emerald-400 text-sm">
                   {input.totalWasteTons.toLocaleString()} Tons
                 </span>
               </div>
@@ -183,20 +193,20 @@ export default function PredictionForm({ countries, categories }: Props) {
                 }}
                 className="w-full accent-emerald-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 mt-1">
-                <span>500 Tons</span>
-                <span>25,000 Tons</span>
-                <span>50,000 Tons</span>
+              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>500 T</span>
+                <span>25k T</span>
+                <span>50k T</span>
               </div>
             </div>
 
-            {/* Household Waste Share (%) */}
-            <div>
-              <div className="flex items-center justify-between text-xs text-slate-300 mb-1.5">
-                <span className="flex items-center gap-1 font-medium">
-                  <Home className="w-3.5 h-3.5 text-emerald-400" /> Household Waste Share (%)
+            {/* Household Share (%) Slider */}
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="flex items-center gap-1 font-bold text-slate-300">
+                  <Home className="w-3.5 h-3.5 text-emerald-400" /> Household Waste Share
                 </span>
-                <span className="font-bold text-emerald-400 text-sm">
+                <span className="font-mono font-black text-emerald-400 text-sm">
                   {input.householdWastePct}%
                 </span>
               </div>
@@ -215,10 +225,10 @@ export default function PredictionForm({ countries, categories }: Props) {
               />
             </div>
 
-            {/* Avg Waste per Capita (Kg) & Population (Million) */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Waste per Capita & Population Inputs */}
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-[11px] font-bold text-slate-400 mb-1">
                   Waste / Capita (Kg)
                 </label>
                 <input
@@ -231,11 +241,11 @@ export default function PredictionForm({ countries, categories }: Props) {
                     setInput(updated);
                     setResult(predictFoodWasteLoss(updated));
                   }}
-                  className="w-full px-3 py-2 bg-slate-950/80 border border-slate-700/80 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500 font-mono"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-[11px] font-bold text-slate-400 mb-1">
                   Population (M)
                 </label>
                 <input
@@ -248,22 +258,22 @@ export default function PredictionForm({ countries, categories }: Props) {
                     setInput(updated);
                     setResult(predictFoodWasteLoss(updated));
                   }}
-                  className="w-full px-3 py-2 bg-slate-950/80 border border-slate-700/80 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500 font-mono"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-xs shadow-glow flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Recompute AI Prediction</span>
+              <span>Recalculate AI Prediction</span>
             </button>
           </form>
         </div>
 
-        {/* Prediction Results & Impact (7 cols on lg) */}
+        {/* Prediction Results Cockpit (7 cols on lg) */}
         <div className="lg:col-span-7">
           <PredictionResult result={result} input={input} />
         </div>
